@@ -190,3 +190,45 @@ if (sidebarFooterStatus) {
     utilityModal.show();
   });
 }
+
+/* ----------------------------------------------------
+   Step 5: Live Map Injection Module (Leaflet.js)
+------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize map centered around a simulated flight surveillance zone
+  const map = L.map('map', {
+    zoomControl: false 
+  }).setView([17.3850, 78.4867], 13); // Default location coordinates
+
+  // Load sleek open-source map base tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Simulated Drone Coordinates
+  const drones = [
+    { id: "DR-01", lat: 17.3890, lng: 78.4890, status: "Active (Perimeter Sweep)" },
+    { id: "DR-02", lat: 17.3950, lng: 78.4750, status: "Low Battery (Returning to Base)" },
+    { id: "DR-04", lat: 17.3720, lng: 78.4920, status: "Active (Border Watch)" }
+  ];
+
+  // Plot interactive blinking indicators onto the grid
+  drones.forEach(drone => {
+    const marker = L.circleMarker([drone.lat, drone.lng], {
+      radius: 8,
+      fillColor: "#ff8a1f",
+      color: "#fff",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    }).addTo(map);
+
+    marker.bindPopup(`<b style="color:#000">${drone.id}</b><br><span style="color:#333">${drone.status}</span>`);
+  });
+
+  // Re-calculate layout dimensions instantly whenever "Expand Context" is clicked
+  document.getElementById("toggleMap").addEventListener("click", () => {
+    setTimeout(() => { map.invalidateSize(); }, 320);
+  });
+});

@@ -969,3 +969,11 @@ small,
 .alert-item p.text-muted {
   color: #c5d1e0 !important;
 }
+
+/* Custom Dark-Mode Filter for Leaflet Maps */
+.leaflet-container {
+  background: #090b0f !important;
+}
+.leaflet-tile {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3);
+}
