@@ -1,12 +1,458 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+:root {
+  --bg: #090b0f;
+  --panel: rgba(16, 20, 26, .92);
+  --panel-soft: rgba(255, 255, 255, .03);
+  --line: rgba(255, 255, 255, .08);
+  --text: #f4f6fb;
+  --muted: #a7b0bc;
+  --orange: #ff8a1f;
+  --red: #ff5c5c;
+  --yellow: #ffc94d;
+  --grey: #7f8793;
+  --shadow: 0 20px 55px rgba(0, 0, 0, .42);
+  --radius: 22px;
 }
 
-body{
-  font-family:'Inter',sans-serif;
-  background:#090b0f;
-  color:white;
-  overflow-x:hidden;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: 
+    radial-gradient(circle at top left, rgba(255, 138, 31, .10), transparent 35%),
+    linear-gradient(180deg, #07090d 0%, #090b0f 100%);
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Category 1, 2, 3: Mobile & Tablet Drawer First Layout */
+.sidebar {
+  width: 260px;
+  background: rgba(12, 15, 20, .96);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  backdrop-filter: blur(18px);
+  transform: translateX(-100%);
+  transition: .3s ease;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-star {
+  font-size: 24px;
+  color: var(--orange);
+  filter: drop-shadow(0 0 10px rgba(255, 138, 31, .9));
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.logo-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -70px;
+  width: 60px;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, rgba(255, 138, 31, .9), transparent);
+  animation: shooting 3.5s ease-in-out infinite;
+}
+
+@keyframes shooting {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-10px);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+}
+
+.brand-text h1 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.brand-text p {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+.nav-section {
+  padding: 6px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-link-btn {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 14px 14px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .25s ease;
+  text-align: left;
+}
+
+.nav-link-btn:hover {
+  background: rgba(255, 255, 255, .04);
+}
+
+.nav-link-btn.active {
+  background: rgba(255, 138, 31, .12);
+  border: 1px solid rgba(255, 138, 31, .18);
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.dot-orange { background: var(--orange); box-shadow: 0 0 10px rgba(255,138,31,.9); }
+.dot-grey { background: var(--grey); box-shadow: 0 0 10px rgba(127,135,147,.55); }
+.dot-red { background: var(--red); box-shadow: 0 0 10px rgba(255,92,92,.8); }
+.dot-yellow { background: var(--yellow); box-shadow: 0 0 10px rgba(255,201,77,.8); }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 18px 18px 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.sidebar-footer p {
+  margin: 0;
+  color: var(--text);
+  font-size: .92rem;
+}
+
+.sidebar-footer span {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.sidebar-footer small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
+  min-width: 0;
+}
+
+/* Premium Dashboard Bound Max-Width constraints */
+.dashboard-view-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Topbar Layout Structure */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap; /* Allows wrapping on Extra Small Category 1 screens */
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  background: #0f1318;
+  color: var(--text);
+  cursor: pointer;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+  background: #141a22;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 138, 31, .08);
+  border: 1px solid rgba(255, 138, 31, .18);
+  color: #ffd5b0;
+  font-size: .85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  position: relative;
+  flex: 0 0 auto;
+  box-shadow: 0 0 10px rgba(255, 138, 31, .7);
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 138, 31, .28);
+  animation: livePulse 1.8s infinite;
+}
+
+@keyframes livePulse {
+  0% { transform: scale(.8); opacity: .85; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Premium Built Search Layout Container */
+.search-wrap {
+  flex: 1 0 100%; /* Force Full width on Category 1 (XS screens) */
+  min-width: 0;
+}
+
+.search-box-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--muted);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.search-wrap input {
+  width: 100%;
+  background: #0d1117;
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 12px 16px 12px 44px;
+  outline: none;
+  transition: .2s ease;
+  font-size: 0.95rem;
+}
+
+.search-wrap input:focus {
+  border-color: rgba(255, 138, 31, .45);
+  box-shadow: 0 0 0 4px rgba(255, 138, 31, .12);
+  background: #11161e;
+}
+
+.search-shortcut {
+  position: absolute;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-family: inherit;
+  box-shadow: none;
+}
+
+/* Topbar Actions Fix: Maintained Visibility on all Screens */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.icon-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  background: #0f1318;
+  color: var(--text);
+  cursor: pointer;
+  transition: .2s ease;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  background: #141a22;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--orange);
+}
+
+.badge-dot {
+  position: absolute;
+  top: 10px;
+  right: 11px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red);
+}
+
+.hero-section {
+  margin-top: 40px;
+}
+
+.hero-section h2 {
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  font-weight: 800;
+  max-width: 700px;
+}
+
+.hero-section p {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 650px;
+  line-height: 1.7;
+}
+
+.page-footer {
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+/* -----------------------------------------------
+   Responsive Framework Breakpoint Implementations
+-------------------------------------------------- */
+
+/* Category 2: Small Screens (>= 576px) */
+@media (min-width: 576px) {
+  .content { padding: 18px; }
+  .topbar { padding: 15px 18px; }
+}
+
+/* Category 3: Medium Screens (>= 768px) */
+@media (min-width: 768px) {
+  .content { padding: 20px; }
+  .topbar { gap: 14px; flex-wrap: nowrap; } /* Layout matches row standard from here up */
+  .search-wrap { flex: 1; }
+  .hero-section h2 { font-size: clamp(2.1rem, 3vw, 3.2rem); }
+}
+
+/* Category 4: Large Screens (>= 992px) */
+@media (min-width: 992px) {
+  .sidebar {
+    transform: translateX(0);
+    width: 280px;
+  }
+  .content {
+    margin-left: 280px;
+    padding: 22px;
+  }
+  .menu-btn {
+    display: none;
+  }
+  .topbar-actions {
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .03);
+    backdrop-filter: blur(14px);
+  }
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* Category 5: Extra Large Screens (>= 1200px) */
+@media (min-width: 1200px) {
+  .content { padding: 24px; }
+  .topbar { padding: 16px 20px; }
+}
+
+/* Specialized Small Device Screen Customizations */
+@media (max-width: 767px) {
+  .sidebar-overlay.show {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    z-index: 900;
+    backdrop-filter: blur(4px);
+  }
 }
