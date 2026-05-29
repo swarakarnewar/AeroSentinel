@@ -1,112 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AeroSentinel Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AeroSentinel Dashboard</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <div class="app-shell">
+    <div class="app-shell">
 
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="logo-star">✦</div>
-        <div class="brand-text">
-          <h1>AeroSentinel</h1>
-          <p>Drone Fleet Monitoring</p>
-        </div>
-      </div>
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="logo-star">✦</div>
+                <div class="brand-text">
+                    <h1>AeroSentinel</h1>
+                    <p>Drone Fleet Monitoring</p>
+                </div>
+            </div>
 
-      <div class="nav-section">
-        <button class="nav-link-btn active" type="button">
-          <span class="nav-dot dot-orange"></span>
-          <span>Overview</span>
-        </button>
+            <div class="nav-section">
+                <button class="nav-link-btn active" type="button">
+                    <span class="nav-dot dot-orange"></span>
+                    <span>Overview</span>
+                </button>
 
-        <button class="nav-link-btn" type="button">
-          <span class="nav-dot dot-grey"></span>
-          <span>Drone Fleet</span>
-        </button>
+                <button class="nav-link-btn" type="button">
+                    <span class="nav-dot dot-grey"></span>
+                    <span>Drone Fleet</span>
+                </button>
 
-        <button class="nav-link-btn" type="button">
-          <span class="nav-dot dot-red"></span>
-          <span>Alerts</span>
-        </button>
+                <button class="nav-link-btn" type="button">
+                    <span class="nav-dot dot-red"></span>
+                    <span>Alerts</span>
+                </button>
 
-        <button class="nav-link-btn" type="button">
-          <span class="nav-dot dot-yellow"></span>
-          <span>Missions</span>
-        </button>
-      </div>
+                <button class="nav-link-btn" type="button">
+                    <span class="nav-dot dot-yellow"></span>
+                    <span>Missions</span>
+                </button>
+            </div>
 
-      <div class="sidebar-footer">
-        <p>System Status: <span>Operational</span></p>
-        <small>Version 1.0 • Real-time Monitoring Interface</small>
-      </div>
-    </aside>
+            <div class="sidebar-footer">
+                <p>System Status: <span>Operational</span></p>
+                <small>Version 1.0 • Real-time Monitoring Interface</small>
+            </div>
+        </aside>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <main class="content">
+        <main class="content">
 
-      <header class="topbar">
-        <div class="d-flex align-items-center gap-2 gap-sm-3 order-1">
-          <button class="menu-btn" id="menuBtn" type="button" aria-label="Open navigation">
-            <i class="bi bi-list fs-4"></i>
-          </button>
+            <header class="topbar">
+                <div class="d-flex align-items-center gap-2 gap-sm-3 order-1">
+                    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open navigation">
+                        <i class="bi bi-list fs-4"></i>
+                    </button>
 
-          <div class="status-pill">
-            <span class="live-dot"></span>
-            <span class="d-none d-sm-inline">Live Surveillance</span>
-            <span class="d-inline d-sm-none">Live</span>
+                    <div class="status-pill">
+                        <span class="live-dot"></span>
+                        <span class="d-none d-sm-inline">Live Surveillance</span>
+                        <span class="d-inline d-sm-none">Live</span>
+                    </div>
+                </div>
+
+                <div class="search-wrap order-3 order-md-2 mt-3 mt-md-0">
+                    <div class="search-box-inner">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search drones, alerts, missions..." aria-label="Search" />
+                        <kbd class="search-shortcut d-none d-lg-inline-block">Ctrl K</kbd>
+                    </div>
+                </div>
+
+                <div class="topbar-actions order-2 order-md-3">
+                    <button class="icon-btn" type="button" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge-dot"></span>
+                    </button>
+                    <button class="icon-btn" type="button" aria-label="Profile">
+                        <i class="bi bi-person-circle"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-view-wrapper mt-4">
+
+        <section class="dashboard-view active-view" id="overview-view">
+          <div class="row g-3 mb-4">
+            <div class="col-xl-3 col-sm-6">
+              <div class="glass-card stat-card border-orange-glow">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <div class="stat-label">Active Drones</div>
+                    <div class="stat-value">14</div>
+                  </div>
+                  <span class="stat-icon-wrapper text-orange"><i class="bi bi-airplane"></i></span>
+                </div>
+                <div class="stat-sub"><span class="text-success">12 connected</span> • 2 standby</div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-sm-6">
+              <div class="glass-card stat-card">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <div class="stat-label">Mission Progress</div>
+                    <div class="stat-value">68%</div>
+                  </div>
+                  <span class="stat-icon-wrapper text-yellow"><i class="bi bi-activity"></i></span>
+                </div>
+                <div class="progress-container mt-3">
+                  <div class="progress-bar-fill" style="width: 68%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+              <div class="glass-card stat-card border-red-glow">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <div class="stat-label">Critical Alerts</div>
+                    <div class="stat-value text-red">03</div>
+                  </div>
+                  <span class="stat-icon-wrapper text-red"><i class="bi bi-exclamation-triangle"></i></span>
+                </div>
+                <div class="stat-sub">1 lost signal • 2 boundary drift</div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+              <div class="glass-card stat-card">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <div class="stat-label">Avg Battery</div>
+                    <div class="stat-value">74%</div>
+                  </div>
+                  <span class="stat-icon-wrapper text-muted"><i class="bi bi-battery-charging"></i></span>
+                </div>
+                <div class="stat-sub"><i class="bi bi-shield-check text-success"></i> Fleet level stable</div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="search-wrap order-3 order-md-2 mt-3 mt-md-0">
-          <div class="search-box-inner">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" id="searchInput" placeholder="Search drones, alerts, missions..." aria-label="Search" />
-            <kbd class="search-shortcut d-none d-lg-inline-block">Ctrl K</kbd>
+          <div class="row g-3 mb-4">
+            <div class="col-xl-8">
+              <div class="glass-card section-card mb-3">
+                <div class="section-head">
+                  <div>
+                    <h3>Drone Fleet Status</h3>
+                    <small>Real-time system telemetry</small>
+                  </div>
+                  <div class="animated-dots"><span></span><span></span><span></span></div>
+                </div>
+                <div class="table-responsive">
+                  <table class="drone-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Battery</th>
+                        <th>Altitude</th>
+                        <th>Signal</th>
+                        <th>Current Mission</th>
+                      </tr>
+                    </thead>
+                    <tbody id="droneTableBody">
+                      <tr>
+                        <td class="fw-bold text-white">DR-01</td>
+                        <td><span class="badge-status status-ok">Active</span></td>
+                        <td>
+                          <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-battery-full text-success"></i> 82%
+                          </div>
+                        </td>
+                        <td>420 m</td>
+                        <td><span class="text-success"><i class="bi bi-reception-4"></i> Strong</span></td>
+                        <td class="text-muted">Perimeter Sweep</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold text-white">DR-02</td>
+                        <td><span class="badge-status status-warn">Low Battery</span></td>
+                        <td>
+                          <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-battery text-danger animate-pulse"></i> <span class="text-danger fw-bold">18%</span>
+                          </div>
+                        </td>
+                        <td>180 m</td>
+                        <td><span class="text-warning"><i class="bi bi-reception-3"></i> Medium</span></td>
+                        <td class="text-muted">Zone Check</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold text-white">DR-03</td>
+                        <td><span class="badge-status status-bad">Signal Lost</span></td>
+                        <td>
+                          <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-battery-half text-muted"></i> 61%
+                          </div>
+                        </td>
+                        <td>260 m</td>
+                        <td><span class="text-danger"><i class="bi bi-reception-0"></i> Muted</span></td>
+                        <td class="text-muted">Rescue Scan</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold text-white">DR-04</td>
+                        <td><span class="badge-status status-ok">Active</span></td>
+                        <td>
+                          <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-battery-half text-success"></i> 77%
+                          </div>
+                        </td>
+                        <td>510 m</td>
+                        <td><span class="text-success"><i class="bi bi-reception-4"></i> Strong</span></td>
+                        <td class="text-muted">Border Watch</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div id="noResults" class="p-4 text-center text-muted d-none">
+                    <i class="bi bi-search fs-3 d-block mb-2"></i> No matching drone assets or missions found.
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card section-card">
+                <div class="section-head">
+                  <div>
+                    <h3>Flight Analytics</h3>
+                    <small>Telemetry history and power dissipation profiling</small>
+                  </div>
+                  <span class="mini-badge">Telemetry Stream Active</span>
+                </div>
+                <div class="chart-container-wrapper">
+                  <div class="chart-placeholder-inner" id="chartBox">
+                    <i class="bi bi-graph-up fs-2 text-muted mb-2 animate-pulse"></i>
+                    <p class="m-0 text-muted small font-monospace">CHART.JS COMPONENT ENGINE OFFLINE — STANDBY FOR INITIALIZATION</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4">
+              <div class="glass-card section-card mb-3">
+                <div class="section-head">
+                  <div>
+                    <h3>System Alerts</h3>
+                    <small>Incident logs</small>
+                  </div>
+                  <span class="mini-badge bg-danger-subtle text-danger">3 Active Exceptions</span>
+                </div>
+                
+                <div class="alert-feed-wrapper">
+                  <div class="alert-item alert-critical">
+                    <div class="d-flex justify-content-between">
+                      <strong>Signal Lost — Asset DR-03</strong>
+                      <span class="font-monospace text-muted small">32s ago</span>
+                    </div>
+                    <p class="mb-0 mt-1 text-muted small">Hardware link interrupted during deep corridor sweep route.</p>
+                  </div>
+                  
+                  <div class="alert-item alert-warning">
+                    <div class="d-flex justify-content-between">
+                      <strong>Geofence Warning — Zone B</strong>
+                      <span class="font-monospace text-muted small">2m ago</span>
+                    </div>
+                    <p class="mb-0 mt-1 text-muted small">Asset approaching restricted outer boundary line constraints.</p>
+                  </div>
+
+                  <div class="alert-item alert-warning">
+                    <div class="d-flex justify-content-between">
+                      <strong>Battery Level Warning — DR-02</strong>
+                      <span class="font-monospace text-muted small">5m ago</span>
+                    </div>
+                    <p class="mb-0 mt-1 text-muted small">Charge dropped below 20%. Automated RTB sequence calculated.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="radar-card-wrapper mb-3">
+                <div class="radar-lens">
+                  <div class="radar-sweep"></div>
+                  <div class="radar-blip blip-1"></div>
+                  <div class="radar-blip blip-2"></div>
+                  <div class="radar-concentric-1"></div>
+                  <div class="radar-concentric-2"></div>
+                  <div class="radar-cross-x"></div>
+                  <div class="radar-cross-y"></div>
+                  <div class="radar-center-hub"></div>
+                </div>
+                <div class="radar-overlay-tag">
+                  <span class="mini-badge"><span class="live-dot me-1"></span> Local Scans</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="topbar-actions order-2 order-md-3">
-          <button class="icon-btn" type="button" aria-label="Notifications">
-            <i class="bi bi-bell"></i>
-            <span class="badge-dot"></span>
-          </button>
-          <button class="icon-btn" type="button" aria-label="Profile">
-            <i class="bi bi-person-circle"></i>
-          </button>
-        </div>
-      </header>
+          <div class="row g-3">
+            <div class="col-xl-7" id="mapColumnContainer">
+              <div class="glass-card section-card h-100">
+                <div class="section-head">
+                  <div>
+                    <h3>Dynamic Grid Tracking Map</h3>
+                    <small>Geospatial fleet rendering map pipeline</small>
+                  </div>
+                  <button class="btn-action-pill" id="toggleMap" type="button">
+                    <i class="bi bi-fullscreen me-1"></i> Expand Context
+                  </button>
+                </div>
+                <div class="map-container-outer" id="mapWrap">
+                  <div id="map" class="map-fallback-view">
+                    <i class="bi bi-geo-alt fs-2 text-orange mb-2"></i>
+                    <p class="m-0 font-monospace small text-muted">LEAFLET.JS MAP DISPLAY PENDING FRAMEWORK MOUNT</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <div class="dashboard-view-wrapper">
-        <section class="hero-section">
-          <h2>Mission Control Dashboard</h2>
-          <p>
-            Modern drone surveillance monitoring interface with a clean command-center feel, 
-            built for responsive screening across devices.
-          </p>
+            <div class="col-xl-5" id="missionColumnContainer">
+              <div class="glass-card section-card h-100">
+                <div class="section-head">
+                  <div>
+                    <h3>Active Mission Feeds</h3>
+                    <small>Tactical objective status pipeline</small>
+                  </div>
+                  <span class="mini-badge bg-success-subtle text-success">Live Pipeline</span>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                  <div class="feed-objective-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-bold text-white small"><i class="bi bi-compass me-1 text-orange"></i> Mission Alpha</span>
+                      <span class="badge bg-dark border border-secondary text-orange font-monospace primitive-badge">68%</span>
+                    </div>
+                    <div class="text-muted mt-1 extra-small">Perimeter vector scanning sequence active over Grid Sector 4.</div>
+                  </div>
+
+                  <div class="feed-objective-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-bold text-white small"><i class="bi bi-shield-shaded me-1 text-yellow"></i> Mission Bravo</span>
+                      <span class="badge bg-dark border border-secondary text-yellow font-monospace primitive-badge">Active</span>
+                    </div>
+                    <div class="text-muted mt-1 extra-small">Continuous border telemetry loops returning nominal vector strings.</div>
+                  </div>
+
+                  <div class="feed-objective-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-bold text-white small"><i class="bi bi-heart-pulse me-1 text-red"></i> Mission Rescue</span>
+                      <span class="badge bg-dark border border-danger text-red font-monospace primitive-badge">Hold</span>
+                    </div>
+                    <div class="text-muted mt-1 extra-small">Thermal lookup operations currently suspended due to loss of DR-03 signal.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <footer class="page-footer">
-          AeroSentinel • Frontend Prototype • Designed for recruiter-friendly presentation
-        </footer>
+        <section class="dashboard-view" id="fleet-view">
+          <div class="glass-card section-card mb-4">
+            <div class="section-head">
+              <div>
+                <h3>Hardware Fleet Registries</h3>
+                <small>Comprehensive drone management node configuration</small>
+              </div>
+              <button class="btn-action-pill"><i class="bi bi-plus-lg me-1"></i> Provision New Asset</button>
+            </div>
+            <div class="row g-3 mt-1">
+              <div class="col-lg-4 col-md-6">
+                <div class="asset-grid-card">
+                  <div class="d-flex justify-content-between mb-3">
+                    <span class="font-monospace text-muted">UNIT // DR-01</span>
+                    <span class="badge bg-success-subtle text-success">ONLINE</span>
+                  </div>
+                  <h4 class="text-white mb-2">Quadcopter Striker X</h4>
+                  <div class="small text-muted mb-3">IP: 192.168.42.11 • Model v4.2</div>
+                  <div class="d-flex justify-content-between border-top border-secondary-subtle pt-2 extra-small text-muted">
+                    <span><i class="bi bi-speedometer2"></i> 45km/h</span>
+                    <span><i class="bi bi-alt"></i> 420m</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="asset-grid-card central-glow-warn">
+                  <div class="d-flex justify-content-between mb-3">
+                    <span class="font-monospace text-muted">UNIT // DR-02</span>
+                    <span class="badge bg-warning-subtle text-warning">BATTERY LOW</span>
+                  </div>
+                  <h4 class="text-white mb-2">Scout-V Wing Pro</h4>
+                  <div class="small text-muted mb-3">IP: 192.168.42.12 • Model v2.1</div>
+                  <div class="d-flex justify-content-between border-top border-secondary-subtle pt-2 extra-small text-muted">
+                    <span><i class="bi bi-speedometer2"></i> 12km/h</span>
+                    <span><i class="bi bi-alt"></i> 180m</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="asset-grid-card central-glow-danger">
+                  <div class="d-flex justify-content-between mb-3">
+                    <span class="font-monospace text-muted">UNIT // DR-03</span>
+                    <span class="badge bg-danger-subtle text-danger">DISCONNECTED</span>
+                  </div>
+                  <h4 class="text-white mb-2">Heavy Cargo Carrier H8</h4>
+                  <div class="small text-muted mb-3">IP: 192.168.42.13 • Model v5.0</div>
+                  <div class="d-flex justify-content-between border-top border-secondary-subtle pt-2 extra-small text-muted">
+                    <span><i class="bi bi-speedometer2"></i> 0km/h</span>
+                    <span><i class="bi bi-alt"></i> 260m</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-view" id="alerts-view">
+          <div class="glass-card section-card">
+            <div class="section-head mb-4">
+              <div>
+                <h3>Master Incident Notification Center</h3>
+                <small>Historical alert archiving logs and status checks</small>
+              </div>
+              <span class="mini-badge">System Diagnosis Clean</span>
+            </div>
+            <div class="d-flex flex-column gap-3">
+              <div class="alert-item alert-critical border-start-thick">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="m-0 text-white fs-6 fw-bold"><i class="bi bi-shield-slash me-2"></i>Link State Timeout Fault</h5>
+                  <span class="badge bg-danger">HIGH RISK</span>
+                </div>
+                <p class="text-muted mt-2 small mb-0">Telemetry terminal pipeline lost handshaking responses with drone DR-03 over mountainous valley arrays. Manual remote overriding commands unreachable.</p>
+              </div>
+              <div class="alert-item alert-warning border-start-thick">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="m-0 text-white fs-6 fw-bold"><i class="bi bi-geo-fill me-2"></i>Proximity Boundary Intersection Warning</h5>
+                  <span class="badge bg-warning text-dark">WARN</span>
+                </div>
+                <p class="text-muted mt-2 small mb-0">Asset DR-04 breached coordinate line marker limits during autopilot crosswinds corrections. Trackers re-adjusted baseline parameters.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-view" id="missions-view">
+          <div class="glass-card section-card">
+            <div class="section-head">
+              <div>
+                <h3>Strategic Operations Dashboard</h3>
+                <small>Route configuration engines and mission planning modules</small>
+              </div>
+              <span class="mini-badge bg-secondary-subtle">Engine Online</span>
+            </div>
+            <div class="chart-placeholder-inner p-5 mt-3">
+              <i class="bi bi-layers fs-1 text-muted mb-3"></i>
+              <h4 class="text-white mb-2 fs-5">Mission Simulation Canvas</h4>
+              <p class="text-muted small max-width-500 mx-auto">This engine handles deployment path calculation mapping templates. Route nodes will populate here following Leaflet setup procedures.</p>
+            </div>
+          </div>
+        </section>
+
       </div>
 
-    </main>
+      <footer class="page-footer">
+        AeroSentinel • Frontend Prototype • Designed for recruiter-friendly presentation
+      </footer>
+
+        </main>
+    </div>
+    
+    <div class="modal fade" id="intelModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-start" style="background: #0f1319; border: 1px solid var(--line); border-radius: 16px; color: var(--text);">
+        <div class="modal-header border-secondary-subtle">
+          <h5 class="modal-title fw-bold text-orange" id="intelTitle"><i class="bi bi-shield-exclamation me-2"></i>Telemetry Alert Response</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="intelBody" class="text-white mb-3"></p>
+          <div class="p-3 rounded-3 bg-black bg-opacity-25 border border-secondary-subtle font-monospace extra-small text-muted">
+            RECOMMENDED PROTOCOL: Initialize automatic return-to-base (RTB) vectors or establish fallback satellite handshakes.
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn-action-pill bg-secondary text-white" data-bs-dismiss="modal">Dismiss Log</button>
+          <button type="button" class="btn-action-pill" style="background: var(--orange); color: black;">Acknowledge Threat</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script src="js/app.js"></script>
+  <div class="modal fade" id="utilityModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content text-center" style="background: #0f1319; border: 1px solid var(--line); border-radius: 16px; color: var(--text);">
+        <div class="modal-body p-4">
+          <div class="fs-1 text-orange mb-2"><i class="bi bi-person-badge"></i></div>
+          <h5 class="fw-bold mb-1" id="utilityTitle">Operator Profile</h5>
+          <p class="text-muted small mb-3" id="utilityBody">Clearance Level: Delta-Prime</p>
+          <hr class="border-secondary-subtle">
+          <div class="d-grid gap-2">
+            <button class="btn-action-pill w-100 py-2" type="button">Access Keyrings</button>
+            <button class="btn-action-pill w-100 py-2 bg-danger-subtle text-danger border-danger-subtle" type="button" data-bs-dismiss="modal">Lock Console</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="jss/app.js"></script>
 </body>
+
 </html>
